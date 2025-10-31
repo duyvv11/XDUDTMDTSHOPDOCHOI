@@ -1,0 +1,19 @@
+const mongoose = require("mongoose")
+const { Schema } = mongoose;
+const productSchema = new Schema({
+  name: { type: String, required: true },
+  categoryid: { type: Schema.Types.ObjectId, ref: 'Category' },
+  description: { type: String },
+  imageproducts: { type: String },
+  price: { type: Number },
+  quantity: { type: Number },
+  danhgia: [{
+    totalstart: { type: Number },
+    comment: { type: String }
+  }
+  ],
+  soldout: { type: Number },
+  createdAt: { type: Date },
+  brandid: { type: Schema.Types.ObjectId, ref: 'Brand' }
+})
+module.exports = mongoose.model('Product', productSchema);
