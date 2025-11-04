@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Categories = require('../models/Categories');
+const Category = require('../models/Categories');
 
 
 router.get('/', async (req, res) => {
   try {
-    const categories = await Categories.find();
+    const categories = await Category.find();
     res.status(200).json(categories);
   } catch (err) {
     res.status(500).json({ msg: err.message });
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const category = await Categories.findById(req.params.id);
+    const category = await Category.findById(req.params.id);
     if (!category) {
       return res.status(404).json({ msg: 'Category not found' });
     }
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const category = new Categories(req.body);
+    const category = new Category(req.body);
     const newCategory = await category.save();
     res.status(201).json(newCategory);
   } catch (err) {
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const category = await Categories.findByIdAndUpdate(
+    const category = await Category.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -52,7 +52,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const category = await Categories.findByIdAndDelete(req.params.id);
+    const category = await Category.findByIdAndDelete(req.params.id);
     if (!category) {
       return res.status(404).json({ msg: 'Category not found' });
     }
