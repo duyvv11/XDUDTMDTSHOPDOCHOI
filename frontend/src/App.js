@@ -1,12 +1,16 @@
+import { BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./components/Header";
-// import { Router } from "react-router-dom";
+import Menu from "./components/Menu";
+import Footer from "./components/Footer";
+
 
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
-    </div>
-
+      <Menu />
+      <Footer />
+    </Router>
   );
 }
 
