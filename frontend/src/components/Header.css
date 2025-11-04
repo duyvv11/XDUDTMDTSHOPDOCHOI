@@ -1,0 +1,52 @@
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:var(--main-color);
+  color: white;
+  padding: 10px 40px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.header .Logo-Container a .logo{
+  font-size:50px;
+  font-weight: bold;
+  
+}
+.header .Logo-Container a .descrepsion{
+  font-size:40px
+}
+
+.Search-Container{
+  display: flex;
+  flex-grow: 1;
+  max-width: 400px;
+
+}
+.form-search{
+  display: flex;
+  height: 40px;
+
+}
+.input-search{
+  border-radius: 25px;
+  border: 2px solid var(--main-color);
+  height: 100%;
+  overflow: hidden;
+  width: 600px;
+
+}
+.btn-search{
+  border:none;
+  background-color: var(--main-color);
+  color:white;
+  height: 100%;
+  font-size: 24px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+} 
+
+
+

@@ -15,7 +15,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect('mongodb://localhost:27017/datashop', {
       useNewUrlParser: true,
     });
-    console.log(`MongoDB Connected: {conn.connection.host}`);
+    console.log(`MongoDB Connected`);
   } catch (error) {
     console.error(error.message);
     process.exit(1);

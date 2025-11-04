@@ -1,7 +1,7 @@
 const Product = require("../models/products")
 var express = require('express');
 var router = express.Router();
-//lay tat ca san pham
+//get all product
 router.get('/', async (req, res) => {
   {
     const product = await Product.find().populate('brandid').populate('categoryid');

@@ -5,9 +5,7 @@ const cartSchema = new mongoose.Schema({
   itemcart: [{
     idproduct: { type: Schema.Types.ObjectId, ref: 'Product' },
   }],
-  totalamout: { type: Number },
-  paymentMethod: { type: String },
-  orderDate: { type: Date }
+  total: { type: Number },
 
 })
 module.exports = ('cart', cartSchema);
