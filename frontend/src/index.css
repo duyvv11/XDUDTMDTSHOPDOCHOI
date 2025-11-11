@@ -14,3 +14,14 @@ code {
 :root{
   --main-color:#CF102D;
 }
+.btn-use {
+  background-color: var(--main-color);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+.btn-use:hover {
+  opacity: 0.9;
+}

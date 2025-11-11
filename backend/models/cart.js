@@ -4,8 +4,9 @@ const cartSchema = new mongoose.Schema({
   iduser: { type: Schema.Types.ObjectId, ref: 'User' },
   itemcart: [{
     idproduct: { type: Schema.Types.ObjectId, ref: 'Product' },
+    quantity: { type: Number, default: 1 }
   }],
   total: { type: Number },
 
 })
-module.exports = ('cart', cartSchema);
+module.exports =mongoose.model ('cart', cartSchema);

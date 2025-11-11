@@ -1,4 +1,5 @@
 import './Header.css'
+import { Link } from "react-router-dom";
 import { FaShopify, FaSearch } from 'react-icons/fa';
 function Header() {
   return (
@@ -20,7 +21,7 @@ function Header() {
           </button>
         </form>
       </div>
-      <div>Đăng Nhập</div>
+      <div><Link to="/login">Đăng Nhập </Link></div>
     </header>
   )
 }

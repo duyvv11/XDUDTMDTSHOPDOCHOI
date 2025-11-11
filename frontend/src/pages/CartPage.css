@@ -1,0 +1,128 @@
+/* CartPage.css */
+
+.cart-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--main-color);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.item-details {
+    flex-grow: 1;
+}
+
+.item-name {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--main-color);
+}
+
+.item-price {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 30px;
+}
+
+.quantity-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quantity-btn:hover {
+    background-color: #0056b3;
+}
+
+.quantity-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.item-quantity {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
+
+.item-subtotal {
+    font-weight: bold;
+    color: #d9534f;
+    min-width: 100px;
+    text-align: right;
+}
+
+/* Phần tổng kết */
+.cart-summary {
+    text-align: right;
+    padding-top: 20px;
+    border-top: 2px solid #007bff;
+    margin-top: 20px;
+}
+
+.cart-summary h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.checkout-btn {
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #1e7e34;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    /* Điều chỉnh gap giữa các phần tử */
+    gap: 20px; 
+}
+
+.item-image {
+    width: 80px; /* Kích thước hình ảnh */
+    height: 80px;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    flex-shrink: 0; /* Ngăn hình ảnh bị thu nhỏ */
+}

@@ -35,9 +35,13 @@ require('./models/new')
 const productRoute = require('./routers/product')
 app.use('/api/product', productRoute);
 const brandRoute = require('./routers/brand');
-const categoryRoute = require('./routers/category');
 app.use('/api/brand', brandRoute);
+const categoryRoute = require('./routers/category');
 app.use('/api/category', categoryRoute);
+const userRoute = require('./routers/user');
+app.use('/api/user', userRoute);
+const cartRoutes = require('./routers/cart');
+app.use('/api/cart',cartRoutes);
 
 app.listen(port, () => {
   console.log(`sever run on ${port}`);

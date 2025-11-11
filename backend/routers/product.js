@@ -54,9 +54,16 @@ router.get('/:id', async (req, res) => {
 // Lấy tất cả sản phẩm theo id danh mục
 router.get('/category/:categoryId', async (req, res) => {
   try {
+
     const products = await Product.find({ categoryid: req.params.categoryId })
       .select('name description imageproducts price quantity ')
       .populate('brandid','name');
+    console.log(products)
+      const result = products.map(p=>({
+        ...p,
+        firt_image: p.imageproducts[0]
+      }))
+      console.log(result);
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ msg: err.message });
