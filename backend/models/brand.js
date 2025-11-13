@@ -7,5 +7,7 @@ const brandSchema = new Schema({
   country: { type: String },
   yoe: { type: Number },
   createdAt: { type: Date },
-})
+  },
+  { timestamps: true }
+)
 module.exports = mongoose.model('Brand', brandSchema);

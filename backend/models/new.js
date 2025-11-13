@@ -5,5 +5,5 @@ const newSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   imagenew: { type: String }
-})
+}, { timestamps: true })
 module.exports = mongoose.model('News', newSchema);

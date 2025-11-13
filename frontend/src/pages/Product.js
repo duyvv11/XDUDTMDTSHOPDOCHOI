@@ -12,7 +12,7 @@ function Product() {
   }, []);
 
   // biến giả lập đăng nhập 
-  const userid ="691344a079b20d6f544a3249";
+  const userid =localStorage.getItem("userid");
   // thêm sản phẩm vào giỏ
   const handleAddToCart = async (productid) => {
     try {

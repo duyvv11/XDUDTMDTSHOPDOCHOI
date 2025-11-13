@@ -13,7 +13,6 @@ const productSchema = new Schema({
   }
   ],
   soldout: { type: Number },
-  createdAt: { type: Date },
   brandid: { type: Schema.Types.ObjectId, ref: 'Brand' }
-})
+}, { timestamps: true })
 module.exports = mongoose.model('Product', productSchema);

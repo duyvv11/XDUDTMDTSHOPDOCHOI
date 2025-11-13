@@ -43,7 +43,7 @@ router.put('/:id', async (req, res) => {
         if (!brand) {
             return res.status(404).json({ msg: 'Brand not found' });
         }
-        res.status(200).json(brand);
+        res.status(200).json({msg:"sua thanh cong",brand});
     } catch (err) {
         res.status(400).json({ msg: err.message });
     }

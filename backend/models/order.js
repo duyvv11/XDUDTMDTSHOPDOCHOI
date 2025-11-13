@@ -2,12 +2,28 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-  paymethod: { type: String, required: true },
+  iduser: { type: Schema.Types.ObjectId, ref: "User", required: true },
+
+  items: [
+    {
+      idproduct: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      quantity: { type: Number, required: true },
+    }
+  ],
   total: { type: Number, required: true },
-  status: { type: String, required: true, default: 'chờ xác nhận' },
-  reviewedby: { type: Schema.Types.ObjectId, ref: 'Users' },
-  createAt: { type: Date, default: Date.now },
-  updateAt: { type: Date, default: Date.now },
-  User: { type: Schema.Types.ObjectId, ref: 'Users' },
-})
-module.exports = mongoose.model('Order', orderSchema); 
+  // Trạng thái đơn hàng
+  status: {
+    type: String,
+    enum: ["pending", "confirmed", "shipping", "completed", "cancelled"],
+    default: "pending"
+  },
+  paymentmethod:{
+    type:String,
+    enum :["Pending","Paid"],
+    default:'Pending'
+  },
+
+
+}, { timestamps: true });
+
+module.exports = mongoose.model("Order", orderSchema);

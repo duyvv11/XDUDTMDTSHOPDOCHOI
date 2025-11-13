@@ -18,8 +18,8 @@
 }
 
 /* Tiêu đề */
-.Login-Section h1 {
-  color: #0078d7;
+.Login-Section h2 {
+  color:var(--main-color);
   margin-bottom: 30px;
   font-size: 28px;
 }
@@ -53,22 +53,7 @@
   box-shadow: 0 0 5px rgba(0,120,215,0.3);
 }
 
-/* Nút đăng nhập */
-.Form-DangNhap button {
-  margin-top: 10px;
-  background-color: #0078d7;
-  color: white;
-  padding: 10px 0;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
 
-.Form-DangNhap button:hover {
-  background-color: #005fa3;
-}
 
 /* Dòng đăng ký */
 .Form-DangNhap p {

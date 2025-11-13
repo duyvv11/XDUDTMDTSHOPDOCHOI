@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import './CartPage.css';
 
-const USER_ID = "691344a079b20d6f544a3249";
+// const USER_ID = "691344a079b20d6f544a3249";
+const USER_ID = localStorage.getItem("userid");
 
 function CartPage() {
   const [cart, setCart] = useState(null);

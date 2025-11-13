@@ -1,15 +1,16 @@
-import Product from "./Product";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./Home.css"
 function Home() {
   return (
-    // <Router>
-    //   <h3>Tất cả sản phẩm</h3>
-    //   <Product/>
-    //   <Routes>
-    //     <Route></Route>
-    //   </Routes>
-    // </Router>
-    <h1>Tat ca</h1>
+    <>
+      <div className="Container">
+        <h2>Sản Phẩm Nổi Bật</h2>
+        <h2>Danh Mục Hot</h2>
+        <h2>Sản Phẩm Mới</h2>
+      </div>
+
+
+    </>
   )
 
 
