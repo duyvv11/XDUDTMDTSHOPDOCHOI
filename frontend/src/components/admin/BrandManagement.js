@@ -17,7 +17,7 @@ const BrandManagement = () => {
   const fetchBrands = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/brand'); 
+      const response = await fetch('http://localhost:5000/api/brand/'); 
       const data = await response.json();
       if (Array.isArray(data)) {
         setBrands(data);
@@ -33,7 +33,7 @@ const BrandManagement = () => {
     if (!newBrandData.name) return;
 
     try {
-      const response = await fetch('/api/brand', {
+      const response = await fetch('http://localhost:5000/api/brand/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,7 +54,7 @@ const BrandManagement = () => {
     if (!window.confirm("Bạn có chắc muốn xóa thương hiệu này?")) return;
     
     try {
-      const response = await fetch(`/api/brand/${brandId}`, {
+      const response = await fetch(`http://localhost:5000/api/brand/${brandId}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -70,7 +70,7 @@ const BrandManagement = () => {
     if (!editingBrand) return;
     
     try {
-      const response = await fetch(`/api/brand/${editingBrand._id}`, {
+      const response = await fetch(`http://localhost:5000/api/brand/${editingBrand._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

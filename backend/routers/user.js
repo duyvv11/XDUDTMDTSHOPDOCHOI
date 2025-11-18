@@ -54,18 +54,18 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ msg: 'Sai email hoặc mật khẩu' });
     }
 
-    // tạo token
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      SECRET_ACCESS_KEY,
-      { expiresIn: "7d" }
-    );
+    // // tạo token
+    // const token = jwt.sign(
+    //   { id: user._id, role: user.role },
+    //   SECRET_ACCESS_KEY,
+    //   { expiresIn: "7d" }
+    // );
 
     res.json({
       msg: "Đăng nhập thành công",
-      token,
+      // token,
       user: {
-        id: user._id,
+        id: user.id,
         email: user.email,
         role: user.role,
       },

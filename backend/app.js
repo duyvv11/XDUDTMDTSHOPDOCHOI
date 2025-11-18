@@ -23,12 +23,12 @@ const connectDB = async () => {
 }
 connectDB();
 // require model 
-require('./models/brand')
-require('./models/products')
-require('./models/Categories')
-require('./models/Users')
-require('./models/cart')
-require('./models/new')
+// require('./models/brand')
+// require('./models/products')
+// require('./models/Categories')
+// require('./models/Users')
+// require('./models/cart')
+// require('./models/new')
 
 
 // import routers
@@ -42,6 +42,8 @@ const userRoute = require('./routers/user');
 app.use('/api/user', userRoute);
 const cartRoutes = require('./routers/cart');
 app.use('/api/cart',cartRoutes);
+const oderRoute = require('./routers/order');
+app.use('/api/order',oderRoute);
 
 
 app.listen(port, () => {

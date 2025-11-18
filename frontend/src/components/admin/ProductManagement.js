@@ -1,8 +1,5 @@
-// file: frontend/src/components/admin/ProductManagement.js (BẢN NÂNG CẤP)
 import React, { useState, useEffect } from 'react';
 
-// === CSS CHO MODAL (POP-UP) ===
-// Thêm CSS này ngay trong file cho tiện
 const modalOverlayStyle = {
   position: 'fixed',
   top: 0,
@@ -34,7 +31,7 @@ const modalHeaderStyle = {
   borderBottom: '2px solid #d90429',
   paddingBottom: '10px',
 };
-// ===================================
+
 
 
 const ProductManagement = () => {

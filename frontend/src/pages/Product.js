@@ -11,7 +11,7 @@ function Product() {
       .catch(err => console.log(err));
   }, []);
 
-  // biến giả lập đăng nhập 
+  //  
   const userid =localStorage.getItem("userid");
   // thêm sản phẩm vào giỏ
   const handleAddToCart = async (productid) => {

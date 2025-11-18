@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import './CartPage.css';
 
-// const USER_ID = "691344a079b20d6f544a3249";
 const USER_ID = localStorage.getItem("userid");
 
 function CartPage() {
   const [cart, setCart] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchCartData = async () => {
+    if (!USER_ID) {
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     try {
       const res = await fetch(`http://localhost:5000/api/cart/${USER_ID}`);
@@ -16,6 +21,7 @@ function CartPage() {
       setCart(data);
     } catch (error) {
       console.error("Lỗi khi tải giỏ hàng:", error);
+      setCart(null);
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +44,7 @@ function CartPage() {
     }));
 
     try {
-      const res = await fetch(`http://localhost:5000/api/cart/update`, {
+      const res = await fetch(`http://localhost:5000/api/cart/updatequantity`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userid: USER_ID, productid: productId, quantity: newQuantity }),
@@ -46,18 +52,69 @@ function CartPage() {
       if (!res.ok) throw new Error("Cập nhật thất bại");
     } catch (error) {
       console.error(error);
-      fetchCartData(); 
+      fetchCartData();
     }
   };
 
+  const handlePlaceOrder = async () => {
+    if (!cart?.itemcart?.length || !USER_ID) {
+      alert("Giỏ hàng trống hoặc thông tin người dùng không hợp lệ.");
+      return;
+    }
+
+    const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
+
+    // Chuẩn bị dữ liệu cho API Order
+    const orderItems = cart.itemcart.map(item => ({
+      idproduct: item.idproduct._id,
+      quantity: item.quantity,
+    }));
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          iduser: USER_ID,
+          items: orderItems,
+          total: totalAmount,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Đặt hàng thành công! Vui lòng chọn phương thức thanh toán.");
+
+        // Xóa giỏ hàng trên Server sau khi tạo Order thành công
+        await fetch(`http://localhost:5000/api/cart/${USER_ID}`, {
+          method: 'DELETE',
+        });
+
+        // Tải lại giỏ hàng 
+        fetchCartData();
+
+        // Chuyển hướng đến trang thanh toán/xác nhận
+        navigate(`/checkout/${data.order._id}`);
+      } else {
+        alert(`Lỗi đặt hàng: ${data.message || 'Vui lòng kiểm tra lại giỏ hàng.'}`);
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi đơn hàng:", error);
+      alert("Lỗi kết nối server khi đặt hàng.");
+    }
+  };
+
+
   if (isLoading) return <div className="cart-container">Đang tải giỏ hàng...</div>;
+  if (!USER_ID) return <div className="cart-container"><h1>Giỏ hàng</h1><p>Vui lòng đăng nhập để xem giỏ hàng.</p></div>;
   if (!cart?.itemcart?.length) return <div className="cart-container"><h1>Giỏ hàng</h1><p>Giỏ hàng trống.</p></div>;
 
   const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
 
   return (
     <div className="cart-container">
-      <h2>Giỏ hàng </h2>
+      <h2>Giỏ hàng</h2>
       {cart.itemcart.map(item => (
         <div key={item._id} className="cart-item">
           {item.idproduct.imageproducts?.[0] && <img src={item.idproduct.imageproducts[0]} alt={item.idproduct.name} className="item-image" />}
@@ -77,7 +134,9 @@ function CartPage() {
       ))}
       <div className="cart-summary">
         <h2>Tổng tiền: {totalAmount.toLocaleString('vi-VN')} đ</h2>
-        <button className="btn-use" onClick={() => alert("Chuyển đến trang thanh toán...")}>Thanh toán</button>
+        <button className="btn-use" onClick={handlePlaceOrder}>
+          Đặt Hàng
+        </button>
       </div>
     </div>
   );

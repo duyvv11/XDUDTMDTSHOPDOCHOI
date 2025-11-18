@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../Context/AuthContext";
 import './Login.css';
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
   const HandleLogin = async (e) => {
 
       console.log(email);
@@ -18,8 +20,7 @@ function Login() {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userid", data.user.id);
+        login(data.user.id, data.user.role); 
         alert("Đăng nhập thành công");
         navigate("/");
 

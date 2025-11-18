@@ -2,7 +2,7 @@ const Product = require("../models/products")
 var express = require('express');
 var router = express.Router();
 
-// GET - Lấy tất cả sản phẩm (Bạn đã có)
+// get all
 router.get('/', async (req, res) => {
   try {
     const product = await Product.find()
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET - Lấy chi tiết 1 sản phẩm (Bạn đã có)
+// get detail
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;

@@ -11,7 +11,6 @@ const orderSchema = new Schema({
     }
   ],
   total: { type: Number, required: true },
-  // Trạng thái đơn hàng
   status: {
     type: String,
     enum: ["pending", "confirmed", "shipping", "completed", "cancelled"],
@@ -19,7 +18,7 @@ const orderSchema = new Schema({
   },
   paymentmethod:{
     type:String,
-    enum :["Pending","Paid"],
+    enum :["Pending","Paid-Money","Paid-Bank"],
     default:'Pending'
   },
 

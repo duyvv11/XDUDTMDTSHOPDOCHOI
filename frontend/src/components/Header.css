@@ -16,7 +16,10 @@
 .header .Logo-Container a .descrepsion{
   font-size:40px
 }
-
+.Logo-Container a {
+  text-decoration: none;
+  color: white;
+}
 .Search-Container{
   display: flex;
   flex-grow: 1;
@@ -47,6 +50,12 @@
   align-items: center;
   justify-content: center
 } 
-
+.Link-LogInOut a{
+  text-decoration:none;
+  color: white;
+}
+.Link-LogInOut a:hover{
+  color: rgb(0, 0, 255);
+}
 
 

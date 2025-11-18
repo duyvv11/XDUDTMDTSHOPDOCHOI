@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/cart')
+const Cart = require('../models/cart');
+const { findOneAndUpdate } = require('../models/brand');
 
 router.post("/add", async (req, res) => {
   try {
@@ -47,10 +48,7 @@ router.post("/add", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const userid = req.params.id;
-    console.log(userid);
-    const cartbyUser = await Cart.findOne({ iduser: userid }).populate('itemcart.idproduct','name price imageproducts')
-
-    console.log("gio hang",cartbyUser);
+    const cartbyUser = await Cart.findOne({ iduser: userid }).populate('itemcart.idproduct', 'name price imageproducts')
     if (cartbyUser) {
       return res.status(200).json(cartbyUser);
     }
@@ -62,4 +60,31 @@ router.get("/:id", async (req, res) => {
   }
 
 })
+
+// cap nhat so luon san pham trong gio hàng
+router.put("/updatequantity", async (req, res) => {
+  console.log("update quantitydfdgdfgd");
+  try {
+    const { userid, productid, quantity } = req.body;
+    const updateCart = await Cart.findOneAndUpdate(
+      {
+        iduser: userid,
+        "itemcart.idproduct": productid
+      },
+      {
+        $set: { "itemcart.$.quantity": quantity }
+      }
+    );
+    if (!updateCart) {
+      return res.status(404).json("không tìm thấy giỏ hàng");
+    }
+    else {
+      return res.status(200).json("cập nhật số lượng thành công");
+    }
+  }
+  catch {
+    return res.status(500).json("lỗi server");
+  }
+})
+
 module.exports = router;
