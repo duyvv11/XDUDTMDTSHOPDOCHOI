@@ -1,40 +1,35 @@
-/* file: src/components/admin/Admin.css (CỰC VIP VERSION) */
-
-/* Dùng font chữ hiện đại hơn, ví dụ: 'Poppins' hoặc 'Roboto' */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 body {
   font-family: 'Poppins', sans-serif; 
-  background-color: #e0e5ec; /* Nền chủ đạo của Neumorphism */
+  background-color: #e0e5ec; 
   margin: 0;
   color: #333;
 }
 
-/* === Bố cục chung === */
 .admin-layout {
   display: flex;
   min-height: 100vh;
 }
 .admin-content {
   flex-grow: 1;
-  padding: 30px; /* Tăng padding */
+  padding: 30px; 
   background-color: #e0e5ec;
-  box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; /* Nổi khối cho vùng content */
-  border-radius: 15px; /* Bo góc nhẹ */
-  margin: 20px; /* Tạo khoảng cách với rìa */
+  box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff; 
+  border-radius: 15px; 
+  margin: 20px; 
 }
 
-/* === Sidebar Menu (Menu bên trái) === */
 .admin-sidebar {
-  width: 280px; /* Rộng hơn một chút */
+  width: 280px; 
   min-height: 100vh;
-  background: linear-gradient(145deg, #d4d9e0, #f8fcff); /* Nền gradient nổi khối */
-  padding: 30px 20px; /* Tăng padding */
+  background: linear-gradient(145deg, #d4d9e0, #f8fcff); 
+  padding: 30px 20px; 
   box-sizing: border-box;
-  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff; /* Nổi khối cho sidebar */
-  border-radius: 0 20px 20px 0; /* Bo góc bên phải */
+  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff; 
+  border-radius: 0 20px 20px 0; 
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Đẩy footer xuống dưới */
+  justify-content: space-between; 
 }
 
 .admin-sidebar-header {
@@ -42,13 +37,13 @@ body {
   margin-bottom: 30px;
 }
 .admin-sidebar-header h3 {
-  color: #d90429; /* Màu đỏ VIP */
-  font-size: 1.8em; /* To hơn */
+  color: #d90429; 
+  font-size: 1.8em; 
   font-weight: 700;
   margin: 0;
   padding-bottom: 15px;
-  border-bottom: 2px solid #d90429; /* Đường kẻ dưới màu đỏ */
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Bóng chữ nhẹ */
+  border-bottom: 2px solid #d90429; 
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
 }
 
 .admin-sidebar-nav ul {
@@ -58,35 +53,35 @@ body {
 }
 
 .admin-sidebar-nav li {
-  margin-bottom: 15px; /* Khoảng cách giữa các mục */
+  margin-bottom: 15px; 
 }
 
 .admin-sidebar-nav a {
   display: block;
-  padding: 15px 20px; /* Lớn hơn */
+  padding: 15px 20px; 
   text-decoration: none;
-  color: #333; /* Chữ màu đậm */
+  color: #333; 
   font-weight: 600;
-  border-radius: 12px; /* Bo góc nổi khối */
+  border-radius: 12px; 
   transition: all 0.3s ease;
   background-color: #e0e5ec;
-  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff; /* Hiệu ứng nổi khối */
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff; 
 }
 
 .admin-sidebar-nav a:hover {
-  color: #d90429; /* Hover đổi màu đỏ */
-  box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff; /* Hiệu ứng nhấn vào */
-  transform: translateY(1px); /* Nhấn nhẹ xuống */
+  color: #d90429; 
+  box-shadow: inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff; 
+  transform: translateY(1px); 
 }
 
-.admin-sidebar-nav a.active { /* Class cho link đang hoạt động */
+.admin-sidebar-nav a.active { 
   color: white;
-  background: linear-gradient(145deg, #d90429, #c0392b); /* Nền đỏ gradient */
-  box-shadow: inset 3px 3px 6px #ac0324, inset -3px -3px 6px #f70533; /* Nổi khối nhấn mạnh */
+  background: linear-gradient(145deg, #d90429, #c0392b); 
+  box-shadow: inset 3px 3px 6px #ac0324, inset -3px -3px 6px #f70533; 
 }
 
 .admin-sidebar-footer {
-  margin-top: auto; /* Đẩy xuống cuối */
+  margin-top: auto; 
   text-align: center;
   padding-top: 20px;
   border-top: 1px solid #d4d9e0;
@@ -94,7 +89,6 @@ body {
   color: #666;
 }
 
-/* === Trang quản lý (Sản phẩm, Đơn hàng) === */
 .admin-page-header {
   display: flex;
   justify-content: space-between;
@@ -106,34 +100,33 @@ body {
 
 .admin-page-header h2 {
   margin: 0;
-  color: #2c3e50; /* Màu chữ đậm hơn */
+  color: #2c3e50; 
   font-size: 2em;
   font-weight: 700;
   text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
-/* === Nút (Giống nút "Thêm vào giỏ" - VIP) === */
 .admin-btn {
-  background: linear-gradient(145deg, #d90429, #c0392b); /* Nền đỏ gradient VIP */
+  background: linear-gradient(145deg, #d90429, #c0392b); 
   color: white;
   border: none;
-  padding: 12px 25px; /* Lớn hơn */
+  padding: 12px 25px; 
   font-size: 1em;
   font-weight: 600;
-  border-radius: 30px; /* Bo tròn hoàn toàn */
+  border-radius: 30px; 
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff; /* Hiệu ứng nổi khối */
+  box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff; 
   transition: all 0.3s ease;
-  position: relative; /* Cho hiệu ứng ánh sáng */
+  position: relative; 
   overflow: hidden;
 }
 
 .admin-btn:hover {
-  box-shadow: inset 4px 4px 8px #ac0324, inset -4px -4px 8px #f70533; /* Hiệu ứng nhấn vào */
+  box-shadow: inset 4px 4px 8px #ac0324, inset -4px -4px 8px #f70533; 
   transform: translateY(1px) scale(0.99);
-  background: linear-gradient(145deg, #c0392b, #d90429); /* Đảo gradient nhẹ */
+  background: linear-gradient(145deg, #c0392b, #d90429); 
 }
 
 .admin-btn:active {
@@ -141,7 +134,6 @@ body {
   transform: translateY(2px) scale(0.98);
 }
 
-/* Hiệu ứng ánh sáng lướt qua nút */
 .admin-btn::before {
   content: '';
   position: absolute;
@@ -157,13 +149,11 @@ body {
   left: 100%;
 }
 
-
-/* === Bảng (Table) - VIP === */
 .admin-table-container {
   background-color: #e0e5ec;
   border-radius: 15px;
-  box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff; /* Nổi khối cho container bảng */
-  overflow: hidden; /* Đảm bảo bo góc */
+  box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff; 
+  overflow: hidden; 
 }
 
 .admin-table {
@@ -172,26 +162,26 @@ body {
 }
 
 .admin-table th, .admin-table td {
-  border: none; /* Bỏ border */
-  padding: 15px 20px; /* Lớn hơn */
+  border: none; 
+  padding: 15px 20px; 
   text-align: left;
 }
 
 .admin-table th {
-  background: linear-gradient(145deg, #d90429, #c0392b); /* Header bảng màu đỏ gradient */
+  background: linear-gradient(145deg, #d90429, #c0392b); 
   color: white;
   font-size: 1.1em;
   font-weight: 700;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   position: sticky;
-  top: 0; /* Giữ header khi cuộn */
+  top: 0; 
   z-index: 10;
 }
 
 .admin-table tbody tr {
   background-color: #e0e5ec;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  border-bottom: 1px solid #d4d9e0; /* Kẻ vạch mỏng giữa các hàng */
+  border-bottom: 1px solid #d4d9e0; 
 }
 
 .admin-table tbody tr:last-child {
@@ -199,8 +189,8 @@ body {
 }
 
 .admin-table tbody tr:hover {
-  background-color: #ebf0f5; /* Hover nhẹ */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Bóng nhẹ khi hover */
+  background-color: #ebf0f5; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05); 
 }
 
 .admin-table td {
@@ -208,22 +198,22 @@ body {
 }
 
 .admin-table .action-buttons {
-  white-space: nowrap; /* Giữ các nút trên cùng một dòng */
+  white-space: nowrap; 
 }
 
 .admin-table .action-buttons button {
-  margin-right: 10px; /* Khoảng cách giữa các nút */
+  margin-right: 10px; 
   padding: 8px 15px;
   font-size: 0.9em;
   font-weight: 600;
-  border-radius: 8px; /* Bo góc */
+  border-radius: 8px; 
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff; /* Nổi khối nhỏ */
+  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff; 
 }
 
 .admin-btn-edit {
-  background-color: #ffc107; /* Màu vàng */
+  background-color: #ffc107; 
   color: #333;
   border: none;
 }
@@ -233,7 +223,7 @@ body {
 }
 
 .admin-btn-delete {
-  background-color: #dc3545; /* Màu đỏ */
+  background-color: #dc3545; 
   color: white;
   border: none;
 }
@@ -242,7 +232,6 @@ body {
   transform: translateY(1px);
 }
 
-/* Các trường input/select/textarea (nếu có) */
 .admin-form-group {
   margin-bottom: 20px;
 }
@@ -268,10 +257,9 @@ body {
 
 .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
   outline: none;
-  box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff, 0 0 0 3px rgba(217, 4, 41, 0.3); /* Vòng focus màu đỏ */
+  box-shadow: inset 2px 2px 4px #bebebe, inset -2px -2px 4px #ffffff, 0 0 0 3px rgba(217, 4, 41, 0.3); 
 }
 
-/* Pagination (ví dụ) */
 .admin-pagination {
   display: flex;
   justify-content: center;
