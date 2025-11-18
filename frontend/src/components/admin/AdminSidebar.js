@@ -1,6 +1,5 @@
-// file: frontend/src/components/admin/AdminSidebar.js (ĐÃ SỬA LỖI LẶP)
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // Dùng NavLink thay vì Link
+import { NavLink } from 'react-router-dom'; 
 
 const AdminSidebar = () => {
   return (
@@ -17,10 +16,13 @@ const AdminSidebar = () => {
             <NavLink to="/quan-ly/don-hang">Quản lý Đơn hàng</NavLink>
           </li>
           <li>
-            <NavLink to="/quan-ly/nguoi-dung">Quản lý Người dùng</NavLink>
+            <NavLink to="/quan-ly/danh-muc">Quản lý Danh mục</NavLink> {/* <-- THÊM DÒNG NÀY */}
           </li>
           <li>
             <NavLink to="/quan-ly/thuong-hieu">Quản lý Thương hiệu</NavLink>
+          </li>
+          <li>
+            <NavLink to="/quan-ly/nguoi-dung">Quản lý Người dùng</NavLink>
           </li>
           <li>
             <NavLink to="/quan-ly/bai-viet">Quản lý Bài viết</NavLink>
