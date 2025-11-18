@@ -1,17 +1,23 @@
-// file: frontend/src/components/admin/BrandManagement.js (ĐÃ SỬA)
 import React, { useState, useEffect } from 'react';
+
+const DEFAULT_BRAND_DATA = {
+  name: '',
+  description: '',
+  foundedYear: '' 
+};
 
 const BrandManagement = () => {
   const [brands, setBrands] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [newBrandName, setNewBrandName] = useState('');
-  const [editingBrand, setEditingBrand] = useState(null);
+  
+  const [newBrandData, setNewBrandData] = useState(DEFAULT_BRAND_DATA);
+  
+  const [editingBrand, setEditingBrand] = useState(null); 
 
-  // SỬA Ở ĐÂY
   const fetchBrands = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/brand'); // Bỏ /v1
+      const response = await fetch('/api/brand'); 
       const data = await response.json();
       if (Array.isArray(data)) {
         setBrands(data);
@@ -22,56 +28,60 @@ const BrandManagement = () => {
     setIsLoading(false);
   };
 
-  // SỬA Ở ĐÂY
   const handleAddBrand = async (e) => {
     e.preventDefault();
-    if (!newBrandName) return;
+    if (!newBrandData.name) return;
 
     try {
-      const response = await fetch('/api/brand', { // Bỏ /v1
+      const response = await fetch('/api/brand', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: newBrandName })
+        body: JSON.stringify({
+          ...newBrandData,
+          foundedYear: Number(newBrandData.foundedYear) 
+        })
       });
       if (response.ok) {
-        setNewBrandName('');
-        fetchBrands();
+        setNewBrandData(DEFAULT_BRAND_DATA); 
+        fetchBrands(); 
       }
     } catch (error) {
       console.error("Lỗi khi thêm thương hiệu:", error);
     }
   };
 
-  // SỬA Ở ĐÂY
   const handleDeleteBrand = async (brandId) => {
     if (!window.confirm("Bạn có chắc muốn xóa thương hiệu này?")) return;
     
     try {
-      const response = await fetch(`/api/brand/${brandId}`, { // Bỏ /v1
+      const response = await fetch(`/api/brand/${brandId}`, {
         method: 'DELETE'
       });
       if (response.ok) {
-        fetchBrands();
+        fetchBrands(); 
       }
     } catch (error) {
       console.error("Lỗi khi xóa thương hiệu:", error);
     }
   };
   
-  // SỬA Ở ĐÂY
   const handleUpdateBrand = async (e) => {
     e.preventDefault();
     if (!editingBrand) return;
     
     try {
-      const response = await fetch(`/api/brand/${editingBrand._id}`, { // Bỏ /v1
+      const response = await fetch(`/api/brand/${editingBrand._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: editingBrand.name })
+        body: JSON.stringify({
+          name: editingBrand.name,
+          description: editingBrand.description,
+          foundedYear: Number(editingBrand.foundedYear) 
+        })
       });
       if (response.ok) {
-        setEditingBrand(null);
-        fetchBrands();
+        setEditingBrand(null); 
+        fetchBrands(); 
       }
     } catch (error) {
       console.error("Lỗi khi sửa thương hiệu:", error);
@@ -82,34 +92,96 @@ const BrandManagement = () => {
     fetchBrands();
   }, []);
 
+  const handleNewChange = (e) => {
+    const { name, value } = e.target;
+    setNewBrandData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditingBrand(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div>
       <div className="admin-page-header">
         <h2>Quản lý Thương hiệu</h2>
       </div>
 
-      <form onSubmit={handleAddBrand} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-        <input
-          type="text"
-          placeholder="Tên thương hiệu mới..."
-          value={newBrandName}
-          onChange={(e) => setNewBrandName(e.target.value)}
-          className="admin-input"
-          style={{ flex: 1 }}
-        />
-        <button type="submit" className="admin-btn">Thêm mới</button>
-      </form>
+      {!editingBrand && (
+        <form onSubmit={handleAddBrand} style={{ marginBottom: '20px', background: '#fff', padding: '20px', borderRadius: '15px', boxShadow: 'inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff' }}>
+          <h4>Thêm thương hiệu mới</h4>
+          <div className="admin-form-group">
+            <label>Tên thương hiệu</label>
+            <input
+              name="name"
+              placeholder="Ví dụ: Hasbro"
+              value={newBrandData.name}
+              onChange={handleNewChange}
+              className="admin-input"
+              required
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Mô tả (Description)</label>
+            <textarea
+              name="description"
+              placeholder="Mô tả ngắn về thương hiệu..."
+              value={newBrandData.description}
+              onChange={handleNewChange}
+              className="admin-input"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="admin-form-group">
+            <label>Năm thành lập</label>
+            <input
+              name="foundedYear" 
+              type="number"
+              placeholder="Ví dụ: 1990"
+              value={newBrandData.foundedYear}
+              onChange={handleNewChange}
+              className="admin-input"
+            />
+          </div>
+          <button type="submit" className="admin-btn">Thêm mới</button>
+        </form>
+      )}
       
       {editingBrand && (
-        <form onSubmit={handleUpdateBrand} style={{ marginBottom: '20px', background: '#fff', padding: '15px', borderRadius: '10px', boxShadow: 'inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff' }}>
+        <form onSubmit={handleUpdateBrand} style={{ marginBottom: '20px', background: '#fff', padding: '20px', borderRadius: '15px', boxShadow: 'inset 3px 3px 6px #bebebe, inset -3px -3px 6px #ffffff' }}>
           <h4>Đang sửa: {editingBrand.name}</h4>
-          <input
-            type="text"
-            value={editingBrand.name}
-            onChange={(e) => setEditingBrand({...editingBrand, name: e.target.value})}
-            className="admin-input"
-          />
-          <button type="submit" className="admin-btn" style={{ marginRight: '10px', marginTop: '10px' }}>Lưu thay đổi</button>
+          <div className="admin-form-group">
+            <label>Tên thương hiệu</label>
+            <input
+              name="name"
+              value={editingBrand.name}
+              onChange={handleEditChange}
+              className="admin-input"
+              required
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Mô tả (Description)</label>
+            <textarea
+              name="description"
+              value={editingBrand.description || ''}
+              onChange={handleEditChange}
+              className="admin-input"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="admin-form-group">
+            <label>Năm thành lập</label>
+            <input
+              name="foundedYear" 
+              type="number"
+              value={editingBrand.foundedYear || ''}
+              onChange={handleEditChange}
+              className="admin-input"
+            />
+          </div>
+          <button type="submit" className="admin-btn" style={{ marginRight: '10px' }}>Lưu thay đổi</button>
           <button type="button" onClick={() => setEditingBrand(null)} className="admin-btn" style={{ background: '#555' }}>Hủy</button>
         </form>
       )}
@@ -119,16 +191,20 @@ const BrandManagement = () => {
           <thead>
             <tr>
               <th>Tên thương hiệu</th>
+              <th>Mô tả</th>
+              <th>Năm T.Lập</th>
               <th style={{width: '200px'}}>Hành động</th>
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
-              <tr><td colSpan="2">Đang tải...</td></tr>
+              <tr><td colSpan="4">Đang tải...</td></tr>
             ) : (
               brands.map(brand => (
                 <tr key={brand._id}> 
                   <td>{brand.name}</td>
+                  <td>{brand.description}</td>
+                  <td>{brand.foundedYear}</td>
                   <td className="action-buttons">
                     <button onClick={() => setEditingBrand(brand)} className="admin-btn-edit">Sửa</button>
                     <button onClick={() => handleDeleteBrand(brand._id)} className="admin-btn-delete">Xóa</button>
