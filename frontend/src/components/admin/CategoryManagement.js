@@ -1,24 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-const DEFAULT_CATEGORY_DATA = {
-  name: '',
-  description: '',
-};
 
 const CategoryManagement = () => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);  // dể tải dữ liệu
+  const [isLoading, setIsLoading] = useState(true);  // trạng thái đang load dữ liệu
   
-  const [newCategoryData, setNewCategoryData] = useState(DEFAULT_CATEGORY_DATA);
+  const [newCategoryData, setNewCategoryData] = useState({}); // dữ liệu mới gửi lên api
   
-  const [editingCategory, setEditingCategory] = useState(null); 
+  const [editingCategory, setEditingCategory] = useState(null);  // dữ liệu sửa gửi lên api
 
-  const fetchCategories = async () => {
+  const fetchCategories = async () => {  // load categories hiện dữ liệu
     setIsLoading(true);
     try {
-      const response = await fetch('/api/category'); 
+      const response = await fetch('http://localhost:5000/api/category/'); 
       const data = await response.json();
-      if (Array.isArray(data)) {
+      if (data) {
         setCategories(data);
       }
     } catch (error) {
@@ -27,18 +23,18 @@ const CategoryManagement = () => {
     setIsLoading(false);
   };
 
-  const handleAddCategory = async (e) => {
+  const handleAddCategory = async (e) => {   // bắt sk thêm 
     e.preventDefault();
     if (!newCategoryData.name) return;
 
     try {
-      const response = await fetch('/api/category', {
+      const response = await fetch('http://localhost:5000/api/category/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newCategoryData)
       });
       if (response.ok) {
-        setNewCategoryData(DEFAULT_CATEGORY_DATA); 
+        setNewCategoryData({});  // trả state lưu new category về rỗng
         fetchCategories(); 
       }
     } catch (error) {
@@ -46,7 +42,7 @@ const CategoryManagement = () => {
     }
   };
 
-  const handleDeleteCategory = async (categoryId) => {
+  const handleDeleteCategory = async (categoryId) => {  // bắt sk xóa
     if (!window.confirm("Bạn có chắc muốn xóa danh mục này?")) return;
     
     try {
@@ -61,7 +57,7 @@ const CategoryManagement = () => {
     }
   };
   
-  const handleUpdateCategory = async (e) => {
+  const handleUpdateCategory = async (e) => { // bắt sk update
     e.preventDefault();
     if (!editingCategory) return;
     
@@ -83,11 +79,11 @@ const CategoryManagement = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => {  // load lại khi thay đổi
     fetchCategories();
   }, []);
 
-  const handleNewChange = (e) => {
+  const handleNewChange = (e) => {   // nhận dữ liệu từ ô nhập vào newCate
     const { name, value } = e.target;
     setNewCategoryData(prev => ({ ...prev, [name]: value }));
   };
@@ -123,6 +119,17 @@ const CategoryManagement = () => {
               name="description"
               placeholder="Mô tả ngắn về danh mục..."
               value={newCategoryData.description}
+              onChange={handleNewChange}
+              className="admin-input"
+              rows="3"
+            ></textarea>
+          </div>
+          <div className="admin-form-group">
+            <label>Hình ảnh (Image)</label>
+            <textarea
+              name="imgcategories"
+              placeholder="Hình ảnh url"
+              value={newCategoryData.imgcategories ||""}
               onChange={handleNewChange}
               className="admin-input"
               rows="3"
@@ -166,6 +173,7 @@ const CategoryManagement = () => {
             <tr>
               <th>Tên danh mục</th>
               <th>Mô tả</th>
+              <th>Hình ảnh</th>
               <th style={{width: '200px'}}>Hành động</th>
             </tr>
           </thead>
@@ -177,6 +185,7 @@ const CategoryManagement = () => {
                 <tr key={category._id}> 
                   <td>{category.name}</td>
                   <td>{category.description}</td>
+                  <td><img src={category.imagecategories} className="imgcategoryinadmin"></img></td>
                   <td className="action-buttons">
                     <button onClick={() => setEditingCategory(category)} className="admin-btn-edit">Sửa</button>
                     <button onClick={() => handleDeleteCategory(category._id)} className="admin-btn-delete">Xóa</button>

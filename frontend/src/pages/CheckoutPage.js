@@ -50,25 +50,45 @@ function CheckoutPage() {
     }
 
     try {
-      // cap nhat thanh toan
-      const res = await fetch(`http://localhost:5000/api/order/confirm/${orderId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          paymentmethod: paymentMethod,
-          status: 'confirmed', 
-        }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(`Đặt hàng thành công! Phương thức: ${paymentMethod}. Đơn hàng đang được xử lý.`);
-        // Chuyển hướng đến trang lịch sử đơn hàng
-        navigate('/orders');
-      } else {
-        alert(`Xác nhận đơn hàng thất bại: ${data.message}`);
+      let res;
+      if(paymentMethod==="Paid-Money"){
+        // cap nhat thanh toan
+        res = await fetch(`http://localhost:5000/api/order/confirm/${orderId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            paymentmethod: paymentMethod,
+            status: 'confirmed',
+          }),
+        });
       }
+      if(paymentMethod==="Paid-Bank"){
+        res = await fetch(`http://localhost:5000/api/order/thanhtoanvnpay`,
+          {
+            method:'POST',
+            header:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+              amount: order.total,
+              orderDescription: `Thanh toan Don hang # ${orderId}`,
+              orderType: 'billpayment', 
+              bankCode: '', 
+              language: 'vn'
+            })
+          }
+        ) 
+      }
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(`Đặt hàng thành công! Phương thức: ${paymentMethod}. Đơn hàng đang được xử lý.`);
+          navigate('/orders');
+        } else {
+          alert(`Xác nhận đơn hàng thất bại: ${data.message}`);
+        }
+  
+
+      
+      
     } catch (error) {
       console.error("Lỗi khi xác nhận đơn hàng:", error);
       alert("Lỗi kết nối server khi xác nhận đơn hàng.");
@@ -115,7 +135,7 @@ function CheckoutPage() {
             checked={paymentMethod === 'Paid-Bank'}
             onChange={(e) => setPaymentMethod(e.target.value)}
           />
-          Thanh Toán QR CODE
+          Thanh Toán VN PAY
         </label>
       </div>
 

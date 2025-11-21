@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// GET - Lấy sản phẩm theo category (Bạn đã có)
+// láy sản phẩm theo danh mục
 router.get('/category/:categoryId', async (req, res) => {
   try {
     const products = await Product.find({ categoryid: req.params.categoryId })
@@ -56,12 +56,22 @@ router.get('/category/:categoryId', async (req, res) => {
   }
 });
 
-// ===============================================
-// === BẮT ĐẦU CODE MỚI CHO THÊM, SỬA, XÓA ===
-// ===============================================
+// lấy sản phẩm theo thương hiệu 
+router.get ("/brand/:brandId" , async (req,res)=>{
+  try {
+    console.log(req.params.brandId);
+    const products = await Product.find({brandid:req.params.brandId})
+      // .select('name description imageproducts price quantity ')
+      // .populate('categoryid', 'name');
+    res.status(200).json(products);
+    
+  } catch (error) {
+    res.status(500).json("lỗi sever", error.message);
+    
+  }
 
-// POST - Thêm sản phẩm mới
-// API: POST /api/product
+
+})
 router.post('/', async (req, res) => {
   try {
     // Lấy dữ liệu từ body
@@ -100,7 +110,6 @@ router.post('/', async (req, res) => {
 });
 
 // PUT - Cập nhật (Sửa) sản phẩm
-// API: PUT /api/product/:id
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -144,7 +153,6 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE - Xóa sản phẩm
-// API: DELETE /api/product/:id
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;

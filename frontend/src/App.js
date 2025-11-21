@@ -17,7 +17,10 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
 import CheckoutPage from "./pages/CheckoutPage";
-
+import BrandPage from "./pages/BrandPage";
+import OrderPage from"./pages/OrderPage";
+import UserManagement from "./components/admin/UserManagement";
+import NewManagement from "./components/admin/NewManagement";
 function App() {
 
   return (
@@ -33,11 +36,16 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/Cart" element={<CartPage />} />
         <Route path="/checkout/:orderId" element={<CheckoutPage/>}/>
+        <Route path="/brands" element={<BrandPage/>}/>
+        <Route path="/Order" element = {<OrderPage/>}/>
         
         <Route path="/quan-ly" element={<AdminLayout />}>
         <Route path="san-pham" element={<ProductManagement />} />
         <Route path="don-hang" element={<OrderManagement />} />
+        <Route path="danh-muc" element={<CategoryManagement/>}/>
         <Route path="thuong-hieu" element={<BrandManagement />} />
+        <Route path ="nguoi-dung" element={<UserManagement/>}/>
+        <Route path = "bai-viet" element ={<NewManagement/>}/>
         </Route>
       </Routes>
 

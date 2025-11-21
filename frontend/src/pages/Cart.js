@@ -64,27 +64,28 @@ function CartPage() {
 
     const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
 
-    // Chuẩn bị dữ liệu cho API Order
-    const orderItems = cart.itemcart.map(item => ({
-      idproduct: item.idproduct._id,
-      quantity: item.quantity,
-    }));
+    const order = {
+      amount: totalAmount,
+      bankCode: '',
+      language: 'vn',
+      userid: USER_ID
+    }; 
 
     try {
-      const res = await fetch(`http://localhost:5000/api/order`, {
+      const res = await fetch(`http://localhost:5000/api/order/create_payment_url`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          iduser: USER_ID,
-          items: orderItems,
-          total: totalAmount,
-        }),
+        body: JSON.stringify(order),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert("Đặt hàng thành công! Vui lòng chọn phương thức thanh toán.");
+        alert("Chuyến đến trang thanh toán");
+        // Trả về kết quả 
+        const result = await res.json();
+        // chuyển hướng đến VNPAY 
+        window.location.href = result.paymentUrl;
 
         // Xóa giỏ hàng trên Server sau khi tạo Order thành công
         await fetch(`http://localhost:5000/api/cart/${USER_ID}`, {
@@ -93,9 +94,6 @@ function CartPage() {
 
         // Tải lại giỏ hàng 
         fetchCartData();
-
-        // Chuyển hướng đến trang thanh toán/xác nhận
-        navigate(`/checkout/${data.order._id}`);
       } else {
         alert(`Lỗi đặt hàng: ${data.message || 'Vui lòng kiểm tra lại giỏ hàng.'}`);
       }
@@ -135,7 +133,7 @@ function CartPage() {
       <div className="cart-summary">
         <h2>Tổng tiền: {totalAmount.toLocaleString('vi-VN')} đ</h2>
         <button className="btn-use" onClick={handlePlaceOrder}>
-          Đặt Hàng
+          Đặt Hàng Và Thanh Toán 
         </button>
       </div>
     </div>

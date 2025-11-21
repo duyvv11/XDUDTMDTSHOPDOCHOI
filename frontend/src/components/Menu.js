@@ -6,9 +6,10 @@ function Menu() {
       <ul>
         <li><NavLink to="/">Trang Chủ</NavLink></li>
         <li><NavLink to="Product">Sản Phẩm</NavLink></li>
-        <li><NavLink to="#">Thương Hiệu</NavLink></li>
+        <li><NavLink to="/brands">Thương Hiệu</NavLink></li>
         <li><NavLink to="/Category">Danh Mục</NavLink></li>
         <li><NavLink to="/Cart">Giỏ Hàng</NavLink></li>
+        <li><NavLink to="/Order">Đơn Hàng</NavLink></li>
       </ul>
     </div>
   )

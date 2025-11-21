@@ -287,3 +287,11 @@ body {
     border-color: var(--primary-red);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.imgcategoryinadmin{
+    width:80px;
+    height: 80px;
+}
+.imglogobrand{
+    max-width: 110;
+    max-height: 60;
+}

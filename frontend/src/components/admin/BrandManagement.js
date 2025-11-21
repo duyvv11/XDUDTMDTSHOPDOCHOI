@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 const DEFAULT_BRAND_DATA = {
   name: '',
   description: '',
@@ -43,6 +42,7 @@ const BrandManagement = () => {
       });
       if (response.ok) {
         setNewBrandData(DEFAULT_BRAND_DATA); 
+        alert("Thêm thương hiệu thành công");
         fetchBrands(); 
       }
     } catch (error) {
@@ -136,10 +136,32 @@ const BrandManagement = () => {
           <div className="admin-form-group">
             <label>Năm thành lập</label>
             <input
-              name="foundedYear" 
+              name="yoe" 
               type="number"
               placeholder="Ví dụ: 1990"
-              value={newBrandData.foundedYear}
+              value={newBrandData.yoe}
+              onChange={handleNewChange}
+              className="admin-input"
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Quốc Gia</label>
+            <input
+              name="country" 
+              type="text"
+              placeholder="Tên Quốc Gia"
+              value={newBrandData.country}
+              onChange={handleNewChange}
+              className="admin-input"
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Logo</label>
+            <input
+              name="logobrand" 
+              type="text"
+              placeholder="url hinh anh"
+              value={newBrandData.logobrand}
               onChange={handleNewChange}
               className="admin-input"
             />
@@ -174,9 +196,31 @@ const BrandManagement = () => {
           <div className="admin-form-group">
             <label>Năm thành lập</label>
             <input
-              name="foundedYear" 
+              name="yoe" 
               type="number"
-              value={editingBrand.foundedYear || ''}
+              value={editingBrand.yoe || ''}
+              onChange={handleEditChange}
+              className="admin-input"
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Quốc Gia</label>
+            <input
+              name="country"
+              type="text"
+              placeholder="Tên Quốc Gia"
+              value={editingBrand.country}
+              onChange={handleEditChange}
+              className="admin-input"
+            />
+          </div>
+          <div className="admin-form-group">
+            <label>Logo</label>
+            <input
+              name="logobrand"
+              type="text"
+              placeholder="url hinh anh"
+              value={editingBrand.logobrand}
               onChange={handleEditChange}
               className="admin-input"
             />
@@ -193,6 +237,8 @@ const BrandManagement = () => {
               <th>Tên thương hiệu</th>
               <th>Mô tả</th>
               <th>Năm T.Lập</th>
+              <th>Quốc Gia</th>
+              <th>Logo</th>
               <th style={{width: '200px'}}>Hành động</th>
             </tr>
           </thead>
@@ -204,7 +250,9 @@ const BrandManagement = () => {
                 <tr key={brand._id}> 
                   <td>{brand.name}</td>
                   <td>{brand.description}</td>
-                  <td>{brand.foundedYear}</td>
+                  <td>{brand.yoe}</td>
+                  <td>{brand.country}</td>
+                  <td><img src={brand.logobrand} className="imglogobrand"/></td>
                   <td className="action-buttons">
                     <button onClick={() => setEditingBrand(brand)} className="admin-btn-edit">Sửa</button>
                     <button onClick={() => handleDeleteBrand(brand._id)} className="admin-btn-delete">Xóa</button>

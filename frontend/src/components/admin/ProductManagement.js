@@ -51,7 +51,7 @@ const ProductManagement = () => {
   // 1. Tải tất cả sản phẩm (GET /api/product)
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/product'); 
+      const response = await fetch('http://localhost:5000/api/product/'); 
       const data = await response.json();
       if (Array.isArray(data)) {
         setProducts(data);
@@ -65,7 +65,7 @@ const ProductManagement = () => {
   // 2. Tải tất cả thương hiệu (GET /api/brand)
   const fetchBrands = async () => {
     try {
-      const response = await fetch('/api/brand');
+      const response = await fetch('http://localhost:5000/api/brand');
       const data = await response.json();
       if (Array.isArray(data)) setBrands(data);
     } catch (error) {
@@ -76,7 +76,7 @@ const ProductManagement = () => {
   // 3. Tải tất cả danh mục (GET /api/category)
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/category');
+      const response = await fetch('http://localhost:5000/api/category/');
       const data = await response.json();
       if (Array.isArray(data)) setCategories(data);
     } catch (error) {
@@ -106,7 +106,7 @@ const ProductManagement = () => {
   // 5. Xử lý LƯU (Thêm mới hoặc Sửa)
   const handleSave = async (productData) => {
     const isEditing = !!productData._id; // Kiểm tra xem đây là sửa hay thêm mới
-    const url = isEditing ? `/api/product/${productData._id}` : '/api/product';
+    const url = isEditing ? `http://localhost:5000/api/product/${productData._id}` : 'http://localhost:5000/api/product/';
     const method = isEditing ? 'PUT' : 'POST';
 
     try {
@@ -181,6 +181,7 @@ const ProductManagement = () => {
               <th>Tên sản phẩm</th>
               <th>Giá</th>
               <th>Thương hiệu</th>
+              <th>Kho</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -190,6 +191,7 @@ const ProductManagement = () => {
                 <td>{product.name}</td>
                 <td>{product.price ? product.price.toLocaleString('vi-VN') : 0} đ</td>
                 <td>{product.brandid ? product.brandid.name : 'Không có'}</td>
+                <td>{product.quantity}</td>
                 <td className="action-buttons">
                   <button onClick={() => openEditModal(product)} className="admin-btn-edit">Sửa</button>
                   <button onClick={() => handleDelete(product._id)} className="admin-btn-delete">Xóa</button>
