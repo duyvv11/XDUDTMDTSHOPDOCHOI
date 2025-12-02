@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const News = require("../models/new");
 
-// ======================= GET ALL NEWS =======================
+// get all
 router.get("/", async (req, res) => {
   try {
     const news = await News.find().populate("author", "name email");
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ======================= GET NEWS BY ID =======================
+// get by id
 router.get("/:id", async (req, res) => {
   try {
     const item = await News.findById(req.params.id).populate("author", "name email");
@@ -24,7 +24,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// ======================= CREATE NEWS =======================
+// add new
 router.post("/", async (req, res) => {
   console.log("nhận");
   try {
@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ======================= UPDATE NEWS =======================
+// update new
 router.put("/:id", async (req, res) => {
   try {
     const updated = await News.findByIdAndUpdate(
@@ -66,7 +66,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// ======================= DELETE NEWS =======================
+// delete new
 router.delete("/:id", async (req, res) => {
   try {
     const deleted = await News.findByIdAndDelete(req.params.id);

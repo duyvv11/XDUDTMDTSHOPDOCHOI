@@ -88,7 +88,7 @@ const ProductManagement = () => {
   const handleDelete = async (productId) => {
     if (window.confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
       try {
-        const response = await fetch(`/api/product/${productId}`, {
+        const response = await fetch(`http://localhost:5000/api/product/${productId}`, {
           method: 'DELETE',
         });
         if (response.ok) {
@@ -182,6 +182,7 @@ const ProductManagement = () => {
               <th>Giá</th>
               <th>Thương hiệu</th>
               <th>Kho</th>
+              <th>Hình ảnh</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -192,6 +193,9 @@ const ProductManagement = () => {
                 <td>{product.price ? product.price.toLocaleString('vi-VN') : 0} đ</td>
                 <td>{product.brandid ? product.brandid.name : 'Không có'}</td>
                 <td>{product.quantity}</td>
+                <td>
+                  <img className="image-product-management" src={product.imageproducts[0]} alt="anh san pham"></img>
+                </td>
                 <td className="action-buttons">
                   <button onClick={() => openEditModal(product)} className="admin-btn-edit">Sửa</button>
                   <button onClick={() => handleDelete(product._id)} className="admin-btn-delete">Xóa</button>
@@ -324,6 +328,17 @@ const ProductFormModal = ({ product, brands, categories, onClose, onSave }) => {
             <textarea
               name="description"
               value={formData.description || ''}
+              onChange={handleChange}
+              className="admin-input" // Dùng chung style 'admin-input'
+              rows="4"
+            ></textarea>
+          </div>
+          {/* Hình ảnh */}
+          <div className="admin-form-group">
+            <label>Hình ảnh</label>
+            <textarea
+              name="imageproducts"
+              value={formData.imageproducts || ''}
               onChange={handleChange}
               className="admin-input" // Dùng chung style 'admin-input'
               rows="4"

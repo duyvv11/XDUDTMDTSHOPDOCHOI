@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Cart = require('../models/cart');
-const { findOneAndUpdate } = require('../models/brand');
 
 router.post("/add", async (req, res) => {
   try {
@@ -86,5 +85,38 @@ router.put("/updatequantity", async (req, res) => {
     return res.status(500).json("lỗi server");
   }
 })
+
+// Xóa một sản phẩm cụ thể khỏi giỏ hàng
+router.delete( "/",async (req, res) => {
+  try {
+    const { userid, productid } = req.body;
+    console.log(userid,productid);
+    if (!userid || !productid) {
+      return res.status(400).json({ message: "Thiếu ID người dùng hoặc ID sản phẩm." });
+    }
+    const updatedCart = await Cart.findOneAndUpdate(
+      { iduser: userid },
+      {
+        $pull: {
+          itemcart: { 'idproduct': productid } // Lệnh $pull xóa item khỏi mảng itemcart, nơi idproduct khớp với productid
+        }
+      },
+      { new: true } 
+    );
+
+    if (!updatedCart) {
+      return res.status(404).json({ message: "Không tìm thấy giỏ hàng." });
+    }
+
+    return res.status(200).json({
+      message: "Xóa sản phẩm thành công.",
+      cart: updatedCart
+    });
+
+  } catch (error) {
+    console.error("Lỗi server khi xóa sản phẩm:", error);
+    return res.status(500).json({ message: "Lỗi server nội bộ." });
+  }
+});
 
 module.exports = router;

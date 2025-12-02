@@ -42,7 +42,7 @@ function UserInfoPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ address, phone })
       });
-      const data = await res.json();
+      // const data = await res.json();
       if (res.ok) {
         alert("Cập nhật thành công!");
         setUser(prev => ({ ...prev, address, phone }));

@@ -4,7 +4,7 @@ import { FaShopify, FaSearch } from 'react-icons/fa';
 import { VscAccount } from "react-icons/vsc";
 import { useAuth } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react"
+import { useState } from "react"
 function Header() {
   const { userid, role, logout } = useAuth();
   const [searchText, setSearchText] = useState("");

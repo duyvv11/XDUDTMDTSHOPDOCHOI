@@ -8,7 +8,7 @@ const UserManagement = () => {
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/user'); // backend trả về tất cả user
+      const res = await fetch('http://localhost:5000/api/user');
       const data = await res.json();
       if (data) setUsers(data);
     } catch (error) {
@@ -30,17 +30,36 @@ const UserManagement = () => {
     }
   };
 
-  // (Tuỳ chọn) cập nhật role
-  const handleUpdateRole = async (userId, role) => {
+  // Cập nhật role 
+  const handleUpdateRole = async (userId, newRole) => {
+    if (newRole === 'admin') {
+      const isConfirmed = window.confirm(
+        `CẢNH BÁO: Bạn có chắc chắn muốn cấp quyền "Admin" cho người dùng này không? Hành động này không thể hoàn tác.`
+      );
+      if (!isConfirmed) {
+
+        fetchUsers();
+        return;
+      }
+    }
+
     try {
       const res = await fetch(`http://localhost:5000/api/user/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role })
+        body: JSON.stringify({ role: newRole })
       });
-      if (res.ok) fetchUsers();
+      if (res.ok) {
+        alert(`Cập nhật vai trò thành công: ${newRole.toUpperCase()}`);
+        fetchUsers();
+      } else {
+        alert("Cập nhật vai trò thất bại. Vui lòng kiểm tra server.");
+        fetchUsers(); // Tải lại để đồng bộ trạng thái
+      }
     } catch (error) {
       console.error("Lỗi khi cập nhật role:", error);
+      alert("Lỗi kết nối server.");
+      fetchUsers(); // Tải lại để đồng bộ trạng thái
     }
   };
 

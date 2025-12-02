@@ -46,7 +46,7 @@ const CategoryManagement = () => {
     if (!window.confirm("Bạn có chắc muốn xóa danh mục này?")) return;
     
     try {
-      const response = await fetch(`/api/category/${categoryId}`, {
+      const response = await fetch(`http://localhost:5000/api/category/${categoryId}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -62,12 +62,13 @@ const CategoryManagement = () => {
     if (!editingCategory) return;
     
     try {
-      const response = await fetch(`/api/category/${editingCategory._id}`, {
+      const response = await fetch(`http://localhost:5000/api/category/${editingCategory._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: editingCategory.name,
-          description: editingCategory.description
+          description: editingCategory.description,
+          imagecategories:editingCategory.imagecategories
         })
       });
       if (response.ok) {
@@ -162,6 +163,16 @@ const CategoryManagement = () => {
               rows="3"
             ></textarea>
           </div>
+          <div className="admin-form-group">
+            <label>Hình ảnh</label>
+            <textarea
+              name="imagecategories"
+              value={editingCategory.imagecategories || ''}
+              onChange={handleEditChange}
+              className="admin-input"
+              rows="3"
+            ></textarea>
+          </div>
           <button type="submit" className="admin-btn" style={{ marginRight: '10px' }}>Lưu thay đổi</button>
           <button type="button" onClick={() => setEditingCategory(null)} className="admin-btn" style={{ background: '#555' }}>Hủy</button>
         </form>
@@ -185,7 +196,7 @@ const CategoryManagement = () => {
                 <tr key={category._id}> 
                   <td>{category.name}</td>
                   <td>{category.description}</td>
-                  <td><img src={category.imagecategories} className="imgcategoryinadmin"></img></td>
+                  <td><img src={category.imagecategories} className="imgcategoryinadmin" alt="anh category"></img></td>
                   <td className="action-buttons">
                     <button onClick={() => setEditingCategory(category)} className="admin-btn-edit">Sửa</button>
                     <button onClick={() => handleDeleteCategory(category._id)} className="admin-btn-delete">Xóa</button>

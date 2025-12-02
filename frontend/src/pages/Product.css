@@ -11,9 +11,11 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   place-items: center; 
+  max-width: 1600px;
+  margin: auto;
 }
 .product-grid span{
   display: block;

@@ -29,6 +29,32 @@ function OrderPage (){
         return '';
     }
   };
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/order/${orderId}`, {
+        method: 'PUT', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: "cancelled" }) 
+      });
+
+      if (res.ok) {
+        alert("Đơn hàng đã được hủy thành công!");
+        fetchDataOrder();
+      } else {
+        const errorData = await res.json();
+        alert(`Hủy đơn hàng thất bại: ${errorData.message || 'Lỗi server.'}`);
+      }
+    } catch (error) {
+      console.error("Lỗi khi hủy đơn hàng:", error);
+      alert("Lỗi kết nối server khi hủy đơn hàng.");
+    }
+  };
   return (
     <div className="order-page-container">
       <h2>Đơn Hàng của tôi</h2>
@@ -65,7 +91,7 @@ function OrderPage (){
               </span>
             </p>
             {od.status === "pending" && (
-              <button className="btn-use">Hủy</button>
+              <button className="btn-use" onClick={() => handleCancelOrder(od._id)}>Hủy</button>
             )}
           </div>
         )

@@ -63,7 +63,7 @@ router.get('/byuser/:userid', async (req, res) => {
 
 
 // dat hang tien mat
-router.post("/  ", async (req, res) => {
+router.post("/create-paymonney", async (req, res) => {
   const { iduser, total, items } = req.body
   if (!iduser || !items || !total || items.length === 0) {
     return res.status(400).json("du lieu thieu hoac sai");

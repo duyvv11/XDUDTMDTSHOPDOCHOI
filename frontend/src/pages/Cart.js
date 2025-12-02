@@ -4,8 +4,9 @@ import './CartPage.css';
 const USER_ID = localStorage.getItem("userid");
 
 function CartPage() {
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const totalAmount = cart?.itemcart?.reduce((total, item) => total + item.idproduct.price * item.quantity, 0) || 0;
   // load du lieu gio hang
   const fetchCartData = async () => {
     if (!USER_ID) {
@@ -62,8 +63,7 @@ function CartPage() {
       return;
     }
 
-    const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
-
+    
     const order = {
       iduser: USER_ID,
       total: totalAmount,
@@ -103,8 +103,6 @@ function CartPage() {
       return;
     }
 
-    const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
-
     const order = {
       total: totalAmount,
       bankCode: '',
@@ -143,19 +141,43 @@ function CartPage() {
       alert("Lỗi kết nối server khi đặt hàng.");
     }
   };
+  // xóa sp trong gio
+  const handleRemoveItem = async (productId) => {
+    if (!USER_ID || !productId) return;
+
+    setCart(prevCart => ({
+      ...prevCart,
+      itemcart: prevCart.itemcart.filter(item => item.idproduct._id !== productId),
+    }));
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/cart/`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userid: USER_ID, productid: productId }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Xóa sản phẩm thất bại");
+      }
+
+    } catch (error) {
+      console.error("Lỗi khi xóa sản phẩm:", error);
+      alert("Lỗi khi xóa sản phẩm. Đang tải lại giỏ hàng...");
+      fetchCartData(); // Tải lại dữ liệu nếu có lỗi
+    }
+  };
 
 
   if (isLoading) return <div className="cart-container">Đang tải giỏ hàng...</div>;
   if (!USER_ID) return <div className="cart-container"><h1>Giỏ hàng</h1><p>Vui lòng đăng nhập để xem giỏ hàng.</p></div>;
   if (!cart?.itemcart?.length) return <div className="cart-container"><h1>Giỏ hàng</h1><p>Giỏ hàng trống.</p></div>;
 
-  const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
-
   return (
     <div className="cart-container">
       <h2>Giỏ hàng</h2>
       {cart.itemcart.map(item => (
-        <div key={item._id} className="cart-item">
+        <div key={item.idproduct._id} className="cart-item">
           {item.idproduct.imageproducts?.[0] && <img src={item.idproduct.imageproducts[0]} alt={item.idproduct.name} className="item-image" />}
           <div className="item-details">
             <h3>{item.idproduct.name}</h3>
@@ -169,6 +191,13 @@ function CartPage() {
           <div className="item-subtotal">
             Tổng: {(item.idproduct.price * item.quantity).toLocaleString('vi-VN')} đ
           </div>
+          <button
+            className="btn-remove"
+            onClick={() => handleRemoveItem(item.idproduct._id)}
+            style={{ marginLeft: '20px', backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '10px 15px', borderRadius: '5px', cursor: 'pointer' }}
+          >
+            Xóa
+          </button>
         </div>
       ))}
       <div className="cart-summary">
