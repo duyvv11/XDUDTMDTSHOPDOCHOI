@@ -5,8 +5,7 @@ const brandSchema = new Schema({
   description: { type: String },
   logobrand: { type: String },
   country: { type: String },
-  yoe: { type: Number },
-  createdAt: { type: Date },
+  yoe: { type: Number }
   },
   { timestamps: true }
 )

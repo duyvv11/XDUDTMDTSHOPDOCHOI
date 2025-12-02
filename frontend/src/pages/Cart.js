@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
 import './CartPage.css';
 
 const USER_ID = localStorage.getItem("userid");
@@ -7,8 +6,7 @@ const USER_ID = localStorage.getItem("userid");
 function CartPage() {
   const [cart, setCart] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
-
+  // load du lieu gio hang
   const fetchCartData = async () => {
     if (!USER_ID) {
       setIsLoading(false);
@@ -31,11 +29,11 @@ function CartPage() {
     fetchCartData();
   }, []);
 
+  // cap nhat so luong
   const handleUpdateQuantity = async (productId, currentQuantity, change) => {
     const newQuantity = currentQuantity + change;
     if (newQuantity < 1) return;
 
-    // Optimistic update
     setCart(prevCart => ({
       ...prevCart,
       itemcart: prevCart.itemcart.map(item =>
@@ -56,20 +54,69 @@ function CartPage() {
     }
   };
 
-  const handlePlaceOrder = async () => {
+  
+  // khi chọn đặt hàng bằng tiền mặt
+  const handlePlaceOrderPaidMonney = async () => {
     if (!cart?.itemcart?.length || !USER_ID) {
-      alert("Giỏ hàng trống hoặc thông tin người dùng không hợp lệ.");
+      alert("Giỏ hàng trống hoặc thông tin người dùng không hợp lệ");
       return;
     }
 
     const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
 
     const order = {
-      amount: totalAmount,
-      bankCode: '',
-      language: 'vn',
-      userid: USER_ID
+      iduser: USER_ID,
+      total: totalAmount,
+      items: cart.itemcart.map(it =>{
+        return {
+          name:it.idproduct.name,
+          quantity:it.quantity
+        }
+      })
     }; 
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/order/create-paymonney`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order),
+      });
+
+      if (res.ok) {
+        alert("thanh toán thành công");
+        await fetch(`http://localhost:5000/api/cart/${USER_ID}`, {
+          method: 'DELETE',
+        });
+        fetchCartData();
+      } else {
+        alert("Lỗi đặt hàng");
+      }
+    } catch (error) {
+      console.error("Lỗi khi gửi đơn hàng:", error);
+      alert("Lỗi kết nối server khi đặt hàng.");
+    }
+  };
+
+  const handlePlaceOrderPaidVnPay = async () => {
+    if (!cart?.itemcart?.length || !USER_ID) {
+      alert("Giỏ hàng trống hoặc thông tin người dùng không hợp lệ");
+      return;
+    }
+
+    const totalAmount = cart.itemcart.reduce((total, item) => total + item.idproduct.price * item.quantity, 0);
+
+    const order = {
+      total: totalAmount,
+      bankCode: '',
+      language:'vn',
+      iduser: USER_ID,
+      items: cart.itemcart.map(it => {
+        return {
+          name: it.idproduct.name,
+          quantity: it.quantity
+        }
+      })
+    };
 
     try {
       const res = await fetch(`http://localhost:5000/api/order/create_payment_url`, {
@@ -78,24 +125,18 @@ function CartPage() {
         body: JSON.stringify(order),
       });
 
-      const data = await res.json();
-
       if (res.ok) {
         alert("Chuyến đến trang thanh toán");
-        // Trả về kết quả 
         const result = await res.json();
-        // chuyển hướng đến VNPAY 
         window.location.href = result.paymentUrl;
 
-        // Xóa giỏ hàng trên Server sau khi tạo Order thành công
+        // 
         await fetch(`http://localhost:5000/api/cart/${USER_ID}`, {
           method: 'DELETE',
         });
-
-        // Tải lại giỏ hàng 
         fetchCartData();
       } else {
-        alert(`Lỗi đặt hàng: ${data.message || 'Vui lòng kiểm tra lại giỏ hàng.'}`);
+        alert("Lỗi đặt hàng");
       }
     } catch (error) {
       console.error("Lỗi khi gửi đơn hàng:", error);
@@ -132,8 +173,11 @@ function CartPage() {
       ))}
       <div className="cart-summary">
         <h2>Tổng tiền: {totalAmount.toLocaleString('vi-VN')} đ</h2>
-        <button className="btn-use" onClick={handlePlaceOrder}>
-          Đặt Hàng Và Thanh Toán 
+        <button className="btn-use" onClick={handlePlaceOrderPaidMonney} style={{marginRight:"20px"}}>
+          Đặt Hàng Thanh Toán Tiền Mặt
+        </button>
+        <button className="btn-use" onClick={handlePlaceOrderPaidVnPay}>
+          Đặt hàng Thanh Toán VnPay
         </button>
       </div>
     </div>

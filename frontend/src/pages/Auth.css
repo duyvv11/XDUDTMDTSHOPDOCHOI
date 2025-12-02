@@ -1,0 +1,71 @@
+/* Box-sizing fix */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.form-wrapper {
+  width: 90%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 25px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+.form-wrapper a{
+  color: blue;
+}
+.form-title {
+  text-align: center;
+  color: var(--main-color);
+  font-size: 26px;
+  margin-bottom: 25px;
+}
+
+.auth-form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  color: var(--main-color);
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.btn-submit {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 0;
+  background: var(--main-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+}
+
+/* Link register/login */
+.auth-form p {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .form-wrapper {
+    margin: 20px;
+    padding: 20px;
+  }
+}

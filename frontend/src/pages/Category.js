@@ -1,12 +1,12 @@
 import './Category.css'
 import './Product.css'
 import { useState, useEffect } from 'react';
-
+import { Link } from 'react-router-dom';
 function Category() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);
-
+  const userid = localStorage.getItem("userid");
   // Lấy danh sách category
   useEffect(() => {
     fetch('http://localhost:5000/api/category')
@@ -22,6 +22,26 @@ function Category() {
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.log(err));
+  };
+  const handleAddToCart = async (productid) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/cart/add', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userid,
+          productid,
+          quantity: 1
+        })
+      });
+      const data = await res.json();
+      alert(data.msg);
+    } catch (err) {
+      console.log(err);
+      alert("Lỗi khi thêm vào giỏ hàng");
+    }
   };
 
   return (
@@ -44,22 +64,27 @@ function Category() {
 
       {selectedCategory && (
         <div className="product-list">
-          <h2>Sản Phẩm Thuộc Danh Mục</h2>
+          <h2>Tất cả sản phẩm</h2>
           {products.length > 0 ? (
             <div className="product-grid">
               {products.map((p) => (
                 <div className="product-item" key={p._id}>
-                  <img src={p.imageproducts} alt={p.name} />
+                  <Link to={`/product/${p._id}`}>
+                    <img src={p.imageproducts[0]} alt={p.name} />
+                  </Link>
                   <h4>{p.name}</h4>
-                  <p>{p.description}</p>
+                  <p className="product-descreption">{p.description}</p>
                   <h5>Thương hiệu : {p.brandid.name}</h5>
-                  <p><b>{p.price} đ</b></p>
+                  <h5>Danh mục : {p.categoryid.name}</h5>
+                  <span><b>{p.price} đ</b></span>
+                  <button className="btn-add-cart btn-use" onClick={() => handleAddToCart(p._id)}>Thêm vào giỏ</button>
                 </div>
               ))}
             </div>
           ) : (
-            <p>Không có sản phẩm nào trong danh mục này.</p>
-          )}
+            <p>Không có sản phẩm</p>
+          )
+          }
         </div>
       )}
     </div>

@@ -48,7 +48,8 @@ router.get('/category/:categoryId', async (req, res) => {
   try {
     const products = await Product.find({ categoryid: req.params.categoryId })
       .select('name description imageproducts price quantity ')
-      .populate('brandid','name');
+      .populate('brandid','name')
+      .populate('categoryid','name');
     
     res.status(200).json(products);
   } catch (err) {
@@ -61,8 +62,9 @@ router.get ("/brand/:brandId" , async (req,res)=>{
   try {
     console.log(req.params.brandId);
     const products = await Product.find({brandid:req.params.brandId})
-      // .select('name description imageproducts price quantity ')
-      // .populate('categoryid', 'name');
+      .select('name description imageproducts price quantity ')
+      .populate('categoryid', 'name')
+      .populate('brandid', 'name')
     res.status(200).json(products);
     
   } catch (error) {
@@ -82,12 +84,11 @@ router.post('/', async (req, res) => {
       quantity, 
       brandid, 
       categoryid,
-      imageproducts // Đây nên là một mảng các URL hình ảnh
+      imageproducts 
     } = req.body;
-
-    // Kiểm tra dữ liệu cơ bản
+   // Kiểm tra dữ liệu cơ bản
     if (!name || !price || !brandid || !categoryid) {
-      return res.status(400).json({ msg: 'Vui lòng nhập các trường bắt buộc: Tên, Giá, Thương hiệu, Danh mục' });
+      return res.status(400).json({ msg: 'Vui lòng nhập các trường bắt buộc ' });
     }
 
     const newProduct = new Product({
@@ -97,11 +98,11 @@ router.post('/', async (req, res) => {
       quantity,
       brandid,
       categoryid,
-      imageproducts: imageproducts || [] // Đảm bảo imageproducts là mảng
+      imageproducts: imageproducts || [] 
     });
 
     const savedProduct = await newProduct.save();
-    res.status(201).json({ msg: "Thêm sản phẩm thành công!", product: savedProduct });
+    res.status(201).json({ msg: "Thêm sản phẩm thành công", product: savedProduct });
 
   } catch (err) {
     console.error(err);

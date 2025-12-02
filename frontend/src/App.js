@@ -21,6 +21,10 @@ import BrandPage from "./pages/BrandPage";
 import OrderPage from"./pages/OrderPage";
 import UserManagement from "./components/admin/UserManagement";
 import NewManagement from "./components/admin/NewManagement";
+import VnPayReturnPage from "./pages/VnPayReturnPage";
+import SearchResult from './pages/SearchResult';
+import UserInfoPage from './pages/UserInfoPage';
+import Register from "./pages/Register";
 function App() {
 
   return (
@@ -38,7 +42,11 @@ function App() {
         <Route path="/checkout/:orderId" element={<CheckoutPage/>}/>
         <Route path="/brands" element={<BrandPage/>}/>
         <Route path="/Order" element = {<OrderPage/>}/>
-        
+        <Route path="vnpay_return" element ={<VnPayReturnPage/>}/>
+        <Route path="/search" element={<SearchResult />} />
+        <Route path="/userinfo" element={<UserInfoPage />} />
+        <Route path="/register" element = {<Register/>}/>
+
         <Route path="/quan-ly" element={<AdminLayout />}>
         <Route path="san-pham" element={<ProductManagement />} />
         <Route path="don-hang" element={<OrderManagement />} />
@@ -46,6 +54,7 @@ function App() {
         <Route path="thuong-hieu" element={<BrandManagement />} />
         <Route path ="nguoi-dung" element={<UserManagement/>}/>
         <Route path = "bai-viet" element ={<NewManagement/>}/>
+        
         </Route>
       </Routes>
 

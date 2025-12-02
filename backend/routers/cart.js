@@ -6,7 +6,7 @@ const { findOneAndUpdate } = require('../models/brand');
 router.post("/add", async (req, res) => {
   try {
     const { userid: iduser, productid: idproduct, quantity } = req.body;
-    // console.log(".......", idproduct);
+    // // console.log(".......", idproduct);
     const cartByUser = await Cart.findOne({ iduser: iduser });
     // console.log("cartbyuser",cartByUser);
     if (cartByUser) {

@@ -25,3 +25,10 @@ code {
 .btn-use:hover {
   opacity: 0.9;
 }
+a{
+  text-decoration: none;
+  color: white;
+}
+a:hover{
+  color: yellow;
+}

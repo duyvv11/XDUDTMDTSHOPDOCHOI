@@ -44,6 +44,8 @@ const cartRoutes = require('./routers/cart');
 app.use('/api/cart',cartRoutes);
 const oderRoute = require('./routers/order');
 app.use('/api/order',oderRoute);
+const newRoutes = require('./routers/news');
+app.use('/api/new',newRoutes);
 
 
 app.listen(port, () => {

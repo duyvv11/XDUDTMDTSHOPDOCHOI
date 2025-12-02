@@ -11,7 +11,7 @@ const formatVN = (dateString) => {
 console.log(formatVN("2025-11-18T15:43:11.848Z"));
 
 
-const BrandManagement = () => {
+const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -105,7 +105,7 @@ const BrandManagement = () => {
                   <td>{order.iduser.name}<br></br>SĐT:{order.iduser.phone}<br></br>ĐC:{order.iduser.address}</td>  
                   <td>
                     {order.items.map(pd =>{
-                      return <p>{pd.idproduct.name} SL:{pd.quantity}</p>
+                      return <p>{pd.name} SL:{pd.quantity}</p>
                     })}
                   </td>
                   <td>{order.total}</td>
@@ -113,7 +113,15 @@ const BrandManagement = () => {
                   <td>{order.status}</td>
                   <td>
                     <p>Ngày Đặt: {formatVN(order.createdAt)}</p>
-                    <p>Ngày Giao: {}</p>
+                    <p>
+                      {order.status === "confirmed" || order.status === "shipping"  ? (
+                        <p>Ngày nhận đơn: {formatVN(order.updatedAt)}</p>
+                      ):(<p> </p>)}
+                      {order.status === "completed" ? (
+                        <p>Ngày giao đơn: { formatVN(order.updatedAt)}</p>
+                      ) : (<p> </p>)}
+
+                    </p>
                   </td>
                   <td className="action-buttons">
                     {order.status === "pending" &&(
@@ -123,8 +131,13 @@ const BrandManagement = () => {
                     {order.status ==="confirmed" && (
                       <button onClick={(e) => handleEditChange(e, order)} value="shipping" className="admin-btn-edit">Giao Hàng</button>
                     )}
+                    {order.status ==="shipping" && (
+                      <button onClick={(e) => handleEditChange(e, order)} value="completed" className="admin-btn-edit">Giao xong</button>
+                    )}
+                    {order.status !=="completed" &&(
+                      <button onClick={() => handleDeleteOrder(order._id)} className="admin-btn-delete">Hủy</button>
+                    )}
                     
-                    <button onClick={() => handleDeleteOrder(order._id)} className="admin-btn-delete">Hủy</button>
                   </td>
                 </tr>
               ))
@@ -136,4 +149,4 @@ const BrandManagement = () => {
   );
 };
 
-export default BrandManagement;
+export default OrderManagement;

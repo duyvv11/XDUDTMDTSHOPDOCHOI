@@ -1,0 +1,62 @@
+
+.user-info-container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+}
+
+.user-info-container label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  color: var(--main-color);
+}
+
+.user-info-container p {
+  margin: 0;
+  padding: 8px 10px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.user-info-container input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.user-info-container button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.user-info-container button:hover {
+  opacity: 0.9;
+}
+
+/* Nút Sửa */
+.user-info-container button:first-of-type {
+  background: var(--main-color);
+  color: #fff;
+}
+
+/* Nút Hủy */
+.user-info-container button:last-of-type {
+  background: #eee;
+  color: #333;
+  margin-left: 10px;
+}

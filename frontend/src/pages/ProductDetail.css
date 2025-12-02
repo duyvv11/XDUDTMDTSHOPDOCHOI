@@ -1,5 +1,5 @@
 .product-detail {
-  max-width: 1000px;
+  max-width: 1600px;
   margin: 40px auto;
   padding: 30px;
   background-color: #fff;
@@ -61,4 +61,9 @@
 
 .product-detail button:hover {
   background-color: #0056b3;
+}
+.product-detail .image-product{
+  display:flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }

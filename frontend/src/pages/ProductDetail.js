@@ -17,7 +17,7 @@ function ProductDetail() {
 
   return (
     <div className="product-detail">
-      <img src={product.imageproducts} alt={product.name} />
+      <img src={product.imageproducts[0]} alt={product.name} />
 
       <div className="product-detail-info">
         <h2>{product.name}</h2>
@@ -29,6 +29,16 @@ function ProductDetail() {
         <p><b>Giá: {product.price} đ</b></p>
         <p>Đánh giá: {product.averageStar} <FaStar/> </p>
         <button>Thêm vào giỏ hàng</button>
+      </div>
+      <div className="image-product">
+        {product.imageproducts.map((img)=>{
+          return (
+            <div className="img-list">
+              <img src={img}></img>
+            </div>
+          )
+        })}
+
       </div>
     </div>
   );

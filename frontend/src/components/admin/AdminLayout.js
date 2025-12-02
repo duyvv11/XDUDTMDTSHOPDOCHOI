@@ -1,9 +1,8 @@
-// file: src/components/admin/AdminLayout.js (CẬP NHẬT VIP)
-import React from 'react';
+
 import { Outlet } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
 
-import './Admin.css'; // Import file CSS mới
+import './Admin.css'; 
 
 const AdminLayout = () => {
   return (

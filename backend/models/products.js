@@ -7,11 +7,6 @@ const productSchema = new Schema({
   imageproducts:[String],
   price: { type: Number },
   quantity: { type: Number },
-  danhgia: [{
-    totalstart: { type: Number },
-    comment: { type: String }
-  }
-  ],
   soldout: { type: Number },
   brandid: { type: Schema.Types.ObjectId, ref: 'Brand' }
 }, { timestamps: true })
