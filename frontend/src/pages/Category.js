@@ -64,7 +64,7 @@ function Category() {
 
       {selectedCategory && (
         <div className="product-list">
-          <h2>Tất cả sản phẩm</h2>
+          <h2>Sản phẩm thuộc danh mục</h2>
           {products.length > 0 ? (
             <div className="product-grid">
               {products.map((p) => (

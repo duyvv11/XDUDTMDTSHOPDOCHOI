@@ -4,7 +4,7 @@ const NewManagement = () => {
   const [news, setNews] = useState([]);  // dể tải dữ liệu
   const [isLoading, setIsLoading] = useState(true);  // trạng thái đang load dữ liệu
 
-  
+  const userid = localStorage.getItem("userid");
   const [newData, setNewData] = useState({ name: '', content: '', imagenew: '' }); // dữ liệu mới gửi lên api
 
   const [editingNew, setEditingNew] = useState(null);  // dữ liệu sửa gửi lên api
@@ -35,8 +35,9 @@ const NewManagement = () => {
         headers: { 'Content-Type': 'application/json' },
 
         body: JSON.stringify({
-          title: newData.title, 
-          content: newData.content, 
+          author: userid,
+          title: newData.title,
+          content: newData.content,
           imagenew: newData.imagenew
         })
       });
@@ -118,7 +119,7 @@ const NewManagement = () => {
           <div className="admin-form-group">
             <label>Tiêu đề</label>
             <input
-              name="title" 
+              name="title"
               placeholder="Tiêu đề bài viết"
               value={newData.title || ''}
               onChange={handleNewChange}
@@ -140,7 +141,7 @@ const NewManagement = () => {
           <div className="admin-form-group">
             <label>Hình ảnh (Image)</label>
             <textarea
-              name="imagenew" 
+              name="imagenew"
               placeholder="Hình ảnh url"
               value={newData.imagenew || ""}
               onChange={handleNewChange}
@@ -158,7 +159,7 @@ const NewManagement = () => {
           <div className="admin-form-group">
             <label>Title</label>
             <input
-              name="title" 
+              name="title"
               value={editingNew.title || ''}
               onChange={handleEditChange}
               className="admin-input"
